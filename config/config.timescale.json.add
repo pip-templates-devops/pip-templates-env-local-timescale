@@ -1,0 +1,8 @@
+{
+    "timescale" : {
+        "pg_version": "12",
+        "name": "piplocal",
+        "username": "pipadmin",
+        "password": "PIPadmin2021#"
+    }
+}

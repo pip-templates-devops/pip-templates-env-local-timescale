@@ -1,0 +1,4 @@
+###################################################################
+# Create the timescale db
+. "$($rootPath)/timescale/create.ps1" -ConfigPath "$ConfigPath" -ConfigPrefix "timescale" -ResourcePath "$ResourcePath" -ResourcePrefix "timescale"
+###################################################################

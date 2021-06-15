@@ -1,0 +1,81 @@
+kind: PersistentVolume
+apiVersion: v1
+metadata:
+  name: timescale-pv-volume
+  namespace: <%= namespace %>
+  labels:
+    type: local
+    app: postgres
+spec:
+  storageClassName: manual
+  capacity:
+    storage: 5Gi
+  accessModes:
+    - ReadWriteMany
+  hostPath:
+    path: "/mnt/timescale/"
+---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: timescale-pv-claim
+  namespace: <%= namespace %>
+  labels:
+    app: postgres
+spec:
+  storageClassName: manual
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 5Gi
+---
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: timescale-deployment
+  namespace: <%= namespace %>
+spec:
+  selector: 
+    matchLabels:
+      app: timescale
+  template:
+    metadata:
+      labels:
+        app: timescale
+    spec:
+      containers:
+        - name: timescale
+          image: timescale/timescaledb:2.0.0-pg<%= pg_version %>
+          ports:
+            - containerPort: 5432
+          env:
+            - name: POSTGRES_DB
+              value: "<%= name %>"
+            - name: POSTGRES_USER
+              value: "<%= username %>"
+            - name: POSTGRES_PASSWORD
+              value: "<%= password %>"
+          volumeMounts:
+            - mountPath: /var/lib/postgresql/data
+              name: timescaledb
+      volumes:
+        - name: timescaledb
+          persistentVolumeClaim:
+            claimName: timescale-pv-claim
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: timescale
+  namespace: <%= namespace %>
+  labels:
+    name: timescale
+spec:
+  ports:
+    - port: 5432
+      targetPort: 5432
+      name: timescale-port
+      protocol: TCP
+  selector:
+    app: timescale

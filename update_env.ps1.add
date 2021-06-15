@@ -1,0 +1,4 @@
+###################################################################
+# Update the kubernetes
+. "$($rootPath)/kubernetes/update.ps1" -ConfigPath "$ConfigPath" -ConfigPrefix "k8s" -ResourcePath "$ResourcePath" -ResourcePrefix "k8s"
+###################################################################

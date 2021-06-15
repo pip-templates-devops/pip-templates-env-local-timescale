@@ -1,0 +1,4 @@
+###################################################################
+# Delete the timescale db
+. "$($rootPath)/timescale/delete.ps1" -ConfigPath "$ConfigPath" -ConfigPrefix "timescale" -ResourcePath "$ResourcePath" -ResourcePrefix "timescale"
+###################################################################
