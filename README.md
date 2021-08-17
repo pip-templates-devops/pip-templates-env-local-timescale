@@ -7,7 +7,7 @@ This module stores scripts for management local timescale database running in ku
 
 - Download this repository
 - Copy *timescale* folder to master template
-- Add content of *.ps1.add* files to correspondent files from master template
+- Add content of *.ps1.add* files to corresponding files from master template
 - Add content of *config/config.timescale.json.add* to json config file from master template and set the required values
 
 # Config parameters
